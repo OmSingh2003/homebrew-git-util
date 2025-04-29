@@ -5,17 +5,17 @@
 class GitUtil < Formula
   desc "A command-line utility tool for common Git operations."
   homepage "https://github.com/OmSingh2003/git-util"
-  version "0.1.0"
+  version "0.1.1"
 
   on_macos do
-    url "https://github.com/OmSingh2003/git-util/releases/download/v0.1.0/git-util_0.1.0_darwin_amd64.tar.gz"
-    sha256 "134ae9893c7d7570ccf6ebcdb39f7c98087f1322b63b60e2124928c206e007d6"
+    url "https://github.com/OmSingh2003/git-util/releases/download/v0.1.1/git-util_0.1.1_darwin_amd64.tar.gz"
+    sha256 "4e5615f4cd678881bf4327f5f19213fb1bb82d424277e9f7cf9ff74e27fe9b50"
 
     def install
       bin.install "git-util"
     end
 
-    if Hardware::CPU.arm?
+    on_arm do
       def caveats
         <<~EOS
           The darwin_arm64 architecture is not supported for the GitUtil
@@ -27,15 +27,19 @@ class GitUtil < Formula
   end
 
   on_linux do
-    if Hardware::CPU.intel?
+    on_intel do
       if Hardware::CPU.is_64_bit?
-        url "https://github.com/OmSingh2003/git-util/releases/download/v0.1.0/git-util_0.1.0_linux_amd64.tar.gz"
-        sha256 "2effcedb72b0fecbaa84432bd3b5adbb35ae04dd2e769796c457018133900080"
+        url "https://github.com/OmSingh2003/git-util/releases/download/v0.1.1/git-util_0.1.1_linux_amd64.tar.gz"
+        sha256 "c31559e9a6059e9e3658e24c9b80bba06411227116a38688f80f692b7d965169"
 
         def install
           bin.install "git-util"
         end
       end
     end
+  end
+
+  test do
+    system "#{bin}/git-util version"
   end
 end
